@@ -1,0 +1,31 @@
+group 'com.tes'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'groovy'
+apply plugin: 'java'
+
+sourceCompatibility = 1.5
+
+repositories {
+    mavenCentral()
+}
+//create a single Jar with all dependencies
+task instrumentationJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Instrumentation Jar',
+                'Implementation-Version': version,
+                'Premain-Class' : 'com.tes.tickles.client.instrumentation.Agent',
+                'Agent-Class' : 'name.dhruba.javaagent.MyJavaAgent',
+                'Can-Redefine-Classes' :true,
+                'Can-Retransform-Classes' :true
+    }
+    baseName = 'tickles.instrumentation'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.3.11'
+    compile group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
+    compile group: 'log4j', name: 'log4j', version: '1.2.16'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
