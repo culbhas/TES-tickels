@@ -18,7 +18,6 @@ public class Transformer implements ClassFileTransformer {
         byte[] byteCode = classfileBuffer;
 
         if (className.equals("com/tes/tickles/utils/Utility")) {
-            logger.info("Instrumenting Utility class......");
             try {
                 ClassPool classPool = ClassPool.getDefault();
                 CtClass ctClass = classPool.makeClass(new ByteArrayInputStream(
@@ -27,12 +26,14 @@ public class Transformer implements ClassFileTransformer {
                 for (CtMethod method : methods) {
                     method.addLocalVariable("startTime", CtClass.longType);
                     method.insertBefore("startTime = System.nanoTime();");
-                    method.insertAfter("logger.info(\"Execution Duration "
-                            + ": \"+ (System.nanoTime() - startTime) );");
+                    method.insertAfter("com.tes.tickles.client.data.Data data = new com.tes.tickles.client.data.Data();" +
+                            "data.addKeyPart(\""+ctClass.getName()+".\");"+
+                            "data.addKeyPart(\""+method.getName()+"\");"+
+                            "data.setValue(String.valueOf((System.nanoTime() - startTime)));" +
+                            "com.tes.tickles.client.feeder.FeederFactory.getFeeder().feed(data);");
                 }
                 byteCode = ctClass.toBytecode();
                 ctClass.detach();
-                logger.info("Instrumentation complete.");
             } catch (Throwable ex) {
                 logger.info("Exception: " + ex);
                 ex.printStackTrace();
