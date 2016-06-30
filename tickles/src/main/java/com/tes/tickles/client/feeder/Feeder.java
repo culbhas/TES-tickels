@@ -5,5 +5,5 @@ import com.tes.tickles.client.data.Data;
 import java.io.IOException;
 
 public interface Feeder {
-    boolean feed(Data data);
+    boolean feed(Data data) throws Exception;
 }

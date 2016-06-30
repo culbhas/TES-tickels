@@ -30,7 +30,6 @@ public class ConfigTest {
         when(mockClassLoader.getResourceAsStream(resourceName)).thenReturn(mockStream);
         config.loadConfig();
     }
-
     @Test
     public void getProperty() throws Exception {
 
