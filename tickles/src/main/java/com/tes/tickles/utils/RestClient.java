@@ -13,7 +13,7 @@ import java.net.URL;
 
 public class RestClient {
     private static Logger logger = Logger.getLogger(RestClient.class);
-    public boolean post(String restUrl, Data data) throws Exception {
+    public boolean post(String restUrl, Object data) throws Exception {
         URL url = new URL(restUrl);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setDoOutput(true);
