@@ -31,8 +31,8 @@ public class Data {
     public String getKey(){
      StringBuffer key = new StringBuffer("");
          for (String keyPart : keyParts){
-             if(key.equals("")){
-                 key.append(".");
+             if(!key.toString().equals("")){
+                 key.append("#");
              }
              key.append(keyPart);
          }

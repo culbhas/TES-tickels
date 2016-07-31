@@ -25,13 +25,13 @@ public class RestClient {
         OutputStream os = conn.getOutputStream();
         os.write(requestBody.getBytes());
         os.flush();
-
-        if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-            logger.error("Response code: " + conn.getResponseCode());
-            logger.error("Error :" + conn.getErrorStream());
-            throw new RuntimeException("Failed : HTTP error code : "
-                    + conn.getResponseCode());
-        }
+        logger.error("Response code: " + conn.getResponseCode());
+//        if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
+//            logger.error("Response code: " + conn.getResponseCode());
+//            logger.error("Error :" + conn.getErrorStream());
+//            throw new RuntimeException("Failed : HTTP error code : "
+//                    + conn.getResponseCode());
+//        }
 
         BufferedReader br = new BufferedReader(new InputStreamReader(
                 (conn.getInputStream())));
