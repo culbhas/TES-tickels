@@ -7,6 +7,7 @@ import java.util.Properties;
 public class Config {
     public static final String TICKLES_SERVER_PROPERTIES = "tickles-server.properties";
     public static final String TES_TICKLES_SERVER_STAT_URL = "tes.tickles.server.stats.url";
+    public static final String TES_TICKLES_SERVER_ASSET_URL = "tes.tickles.server.assets.url";
     public static final String TES_TICKLES_SERVER_TYPE = "tes.tickles.server.type";
     private static Properties configProps;
 

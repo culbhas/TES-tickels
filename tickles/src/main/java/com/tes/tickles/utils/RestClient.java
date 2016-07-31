@@ -13,7 +13,7 @@ import java.net.URL;
 
 public class RestClient {
     private static Logger logger = Logger.getLogger(RestClient.class);
-    public boolean post(String restUrl, Data data) throws Exception {
+    public boolean post(String restUrl, Object data) throws Exception {
         URL url = new URL(restUrl);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setDoOutput(true);
@@ -25,13 +25,13 @@ public class RestClient {
         OutputStream os = conn.getOutputStream();
         os.write(requestBody.getBytes());
         os.flush();
-
-        if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-            logger.error("Response code: " + conn.getResponseCode());
-            logger.error("Error :" + conn.getErrorStream());
-            throw new RuntimeException("Failed : HTTP error code : "
-                    + conn.getResponseCode());
-        }
+        logger.error("Response code: " + conn.getResponseCode());
+//        if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
+//            logger.error("Response code: " + conn.getResponseCode());
+//            logger.error("Error :" + conn.getErrorStream());
+//            throw new RuntimeException("Failed : HTTP error code : "
+//                    + conn.getResponseCode());
+//        }
 
         BufferedReader br = new BufferedReader(new InputStreamReader(
                 (conn.getInputStream())));

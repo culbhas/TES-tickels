@@ -1,5 +1,7 @@
 package com.tes.tickles.client.instrumentation;
 
+import com.tes.tickles.client.data.Asset;
+import com.tes.tickles.client.locator.LocatorFactory;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtMethod;
@@ -27,7 +29,9 @@ public class Transformer implements ClassFileTransformer {
                     method.addLocalVariable("startTime", CtClass.longType);
                     method.insertBefore("startTime = System.nanoTime();");
                     method.insertAfter("com.tes.tickles.client.data.Data data = new com.tes.tickles.client.data.Data();" +
-                            "data.addKeyPart(\""+ctClass.getName()+".\");"+
+                            "com.tes.tickles.client.data.Asset machineDetails = com.tes.tickles.client.locator.LocatorFactory.getLocator(\"machine\").locate();"+
+                            "data.addKeyPart(machineDetails.getName());" +
+                            "data.addKeyPart(\""+ctClass.getName()+"\");"+
                             "data.addKeyPart(\""+method.getName()+"\");"+
                             "data.setValue(String.valueOf((System.nanoTime() - startTime)));" +
                             "com.tes.tickles.client.feeder.FeederFactory.getFeeder().feed(data);");
