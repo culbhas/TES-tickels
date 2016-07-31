@@ -41,6 +41,6 @@ public class Data {
 
     @Override
     public String toString() {
-        return getKey() + ":" + getValue();
+        return "{\"key\" : \"" + getKey() + ", \"value\":\"" + getValue() + "\"}";
     }
 }
